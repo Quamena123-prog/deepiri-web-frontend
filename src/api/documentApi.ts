@@ -1,7 +1,8 @@
 import axiosInstance from "./axiosInstance";
 import type { DocumentRecord, DocumentStatus, NewDocumentInput } from "../types/document";
 
-type ContractDto = {
+/** Payload shape from language-intelligence `/api/contracts` (legacy route name). */
+type LanguageIntelligenceDocumentDto = {
   id: string;
   contractNumber?: string;
   contractName: string;
@@ -17,7 +18,7 @@ type ContractDto = {
   tags?: string[];
 };
 
-const mapContractStatus = (status?: string): DocumentStatus => {
+const mapRemoteStatus = (status?: string): DocumentStatus => {
   const normalized = (status ?? "").toUpperCase();
   if (normalized === "COMPLETED" || normalized === "ACTIVE") return "Active";
   if (normalized === "ARCHIVED" || normalized === "ERROR") return "Expired";
@@ -31,40 +32,43 @@ const formatFileSize = (bytes?: number | null): string | undefined => {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 };
 
-export const mapContractToDocument = (contract: ContractDto): DocumentRecord => ({
-  id: contract.id,
-  title: contract.contractName,
-  company: contract.partyB || contract.partyA || "—",
-  category: contract.contractType || "General",
-  startDate: contract.effectiveDate
-    ? new Date(contract.effectiveDate).toISOString().split("T")[0]
+const mapDtoToDocument = (dto: LanguageIntelligenceDocumentDto): DocumentRecord => ({
+  id: dto.id,
+  title: dto.contractName,
+  company: dto.partyB || dto.partyA || "—",
+  category: dto.contractType || "General",
+  startDate: dto.effectiveDate
+    ? new Date(dto.effectiveDate).toISOString().split("T")[0]
     : "—",
-  endDate: contract.expirationDate
-    ? new Date(contract.expirationDate).toISOString().split("T")[0]
+  endDate: dto.expirationDate
+    ? new Date(dto.expirationDate).toISOString().split("T")[0]
     : "—",
-  status: mapContractStatus(contract.status),
-  fileName: contract.contractNumber
-    ? `${contract.contractNumber}.${(contract.documentType || "pdf").toLowerCase()}`
-    : contract.contractName,
-  fileSize: formatFileSize(contract.fileSize),
-  fileType: contract.documentType,
-  documentUrl: contract.documentUrl,
-  tags: contract.tags ?? [],
+  status: mapRemoteStatus(dto.status),
+  fileName: dto.contractNumber
+    ? `${dto.contractNumber}.${(dto.documentType || "pdf").toLowerCase()}`
+    : dto.contractName,
+  fileSize: formatFileSize(dto.fileSize),
+  fileType: dto.documentType,
+  documentUrl: dto.documentUrl,
+  tags: dto.tags ?? [],
 });
 
-export const contractApi = {
+/** Language Intelligence document API (proxied at `/api/contracts` until backend route rename). */
+export const documentApi = {
   list: async (): Promise<DocumentRecord[]> => {
-    const response = await axiosInstance.get<{ success: boolean; data: ContractDto[] }>(
-      "/contracts"
-    );
-    return (response.data.data ?? []).map(mapContractToDocument);
+    const response = await axiosInstance.get<{
+      success: boolean;
+      data: LanguageIntelligenceDocumentDto[];
+    }>("/contracts");
+    return (response.data.data ?? []).map(mapDtoToDocument);
   },
 
   getById: async (id: string): Promise<DocumentRecord | null> => {
-    const response = await axiosInstance.get<{ success: boolean; data: ContractDto }>(
-      `/contracts/${id}`
-    );
-    return response.data.data ? mapContractToDocument(response.data.data) : null;
+    const response = await axiosInstance.get<{
+      success: boolean;
+      data: LanguageIntelligenceDocumentDto;
+    }>(`/contracts/${id}`);
+    return response.data.data ? mapDtoToDocument(response.data.data) : null;
   },
 
   upload: async (file: File, title?: string): Promise<DocumentRecord> => {
@@ -78,12 +82,13 @@ export const contractApi = {
     formData.append("effectiveDate", new Date().toISOString());
     formData.append("contractType", "Uploads");
 
-    const response = await axiosInstance.post<{ success: boolean; data: ContractDto }>(
-      "/contracts/upload",
-      formData,
-      { headers: { "Content-Type": "multipart/form-data" } }
-    );
-    return mapContractToDocument(response.data.data);
+    const response = await axiosInstance.post<{
+      success: boolean;
+      data: LanguageIntelligenceDocumentDto;
+    }>("/contracts/upload", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    return mapDtoToDocument(response.data.data);
   },
 
   create: async (input: NewDocumentInput): Promise<DocumentRecord> => {
@@ -103,12 +108,13 @@ export const contractApi = {
     if (input.endDate) formData.append("expirationDate", input.endDate);
     formData.append("contractType", input.category || "General");
 
-    const response = await axiosInstance.post<{ success: boolean; data: ContractDto }>(
-      "/contracts/upload",
-      formData,
-      { headers: { "Content-Type": "multipart/form-data" } }
-    );
-    const doc = mapContractToDocument(response.data.data);
+    const response = await axiosInstance.post<{
+      success: boolean;
+      data: LanguageIntelligenceDocumentDto;
+    }>("/contracts/upload", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    const doc = mapDtoToDocument(response.data.data);
     return { ...doc, status: input.status };
   },
 };

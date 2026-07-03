@@ -1,4 +1,4 @@
-import { contractApi } from "../api/contractApi";
+import { documentApi } from "../api/documentApi";
 import type { DocumentRecord, DocumentStatus, NewDocumentInput } from "../types/document";
 
 const STORAGE_KEY = "deepiri-language-intelligence-documents";
@@ -120,7 +120,7 @@ export const documentService = {
   loadDocuments: async (): Promise<DocumentRecord[]> => {
     const localDocs = readStoredDocuments();
     try {
-      const remoteDocs = await contractApi.list();
+      const remoteDocs = await documentApi.list();
       if (remoteDocs.length > 0) {
         const merged = mergeDocuments(localDocs, remoteDocs);
         writeStoredDocuments(merged);
@@ -138,7 +138,7 @@ export const documentService = {
       return localDoc;
     }
     try {
-      const remoteDoc = await contractApi.getById(id);
+      const remoteDoc = await documentApi.getById(id);
       if (remoteDoc) {
         const documents = readStoredDocuments();
         const next = mergeDocuments(documents, [remoteDoc]);
@@ -153,7 +153,7 @@ export const documentService = {
 
   uploadDocument: async (file: File): Promise<DocumentRecord> => {
     try {
-      const uploaded = await contractApi.upload(file);
+      const uploaded = await documentApi.upload(file);
       const documents = readStoredDocuments();
       const next = [uploaded, ...documents.filter((d) => d.id !== uploaded.id)];
       writeStoredDocuments(next);
@@ -182,7 +182,7 @@ export const documentService = {
 
   createDocument: async (input: NewDocumentInput): Promise<DocumentRecord> => {
     try {
-      const created = await contractApi.create(input);
+      const created = await documentApi.create(input);
       const documents = readStoredDocuments();
       writeStoredDocuments([created, ...documents.filter((d) => d.id !== created.id)]);
       return created;
