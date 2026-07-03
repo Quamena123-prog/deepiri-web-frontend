@@ -1,21 +1,8 @@
-import React, { useMemo, useState, useRef } from "react";
+import React, { useEffect, useMemo, useState, useRef } from "react";
 import { Search, Upload, Plus, Eye, FileText, X, CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
-type DocumentStatus = "Active" | "Pending" | "Expired";
-
-type DocumentItem = {
-  id: number;
-  title: string;
-  company: string;
-  category: string;
-  startDate: string;
-  endDate: string;
-  status: DocumentStatus;
-  fileName?: string;
-  fileSize?: string;
-  fileType?: string;
-};
+import type { DocumentRecord, DocumentStatus, NewDocumentInput } from "../types/document";
+import { documentService } from "../services/documentService";
 
 const DocumentsPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -37,12 +24,22 @@ const DocumentsPage: React.FC = () => {
     status: "Active" as DocumentStatus,
   });
 
-  const [documents, setDocuments] = useState<DocumentItem[]>([
-    { id: 1, title: "Master Service Agreement", company: "OpenWave Technologies", category: "Legal", startDate: "2026-01-10", endDate: "2027-01-10", status: "Active" },
-    { id: 2, title: "Employment Document", company: "Deepiri Inc.", category: "HR", startDate: "2026-02-14", endDate: "2028-02-14", status: "Active" },
-    { id: 3, title: "Vendor Supply Agreement", company: "NorthStar Supplies", category: "Procurement", startDate: "2026-03-01", endDate: "2026-12-31", status: "Pending" },
-    { id: 4, title: "Partnership Agreement", company: "Vertex Labs", category: "Business", startDate: "2024-05-12", endDate: "2025-05-12", status: "Expired" },
-  ]);
+  const [documents, setDocuments] = useState<DocumentRecord[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [uploading, setUploading] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    documentService.loadDocuments().then((loaded) => {
+      if (active) {
+        setDocuments(loaded);
+        setLoading(false);
+      }
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const sections = [
     { label: "All Documents", filter: null },
@@ -70,36 +67,28 @@ const DocumentsPage: React.FC = () => {
     if (file) setUploadedFile(file);
   };
 
-  const handleUploadSubmit = () => {
-    if (!uploadedFile) return;
-    const newDoc: DocumentItem = {
-      id: documents.length + 1,
-      title: uploadedFile.name.replace(/\.[^/.]+$/, ""),
-      company: "—",
-      category: "Uploads",
-      startDate: new Date().toISOString().split("T")[0],
-      endDate: "—",
-      status: "Pending",
-      fileName: uploadedFile.name,
-      fileSize: formatFileSize(uploadedFile.size),
-      fileType: uploadedFile.type,
-    };
-    setDocuments((prev) => [newDoc, ...prev]);
-    setUploadSuccess(true);
-    setTimeout(() => {
-      setUploadSuccess(false);
-      setUploadedFile(null);
-      setShowUploadModal(false);
-    }, 1500);
+  const handleUploadSubmit = async () => {
+    if (!uploadedFile || uploading) return;
+    setUploading(true);
+    try {
+      const newDoc = await documentService.uploadDocument(uploadedFile);
+      setDocuments((prev) => [newDoc, ...prev.filter((doc) => doc.id !== newDoc.id)]);
+      setUploadSuccess(true);
+      setTimeout(() => {
+        setUploadSuccess(false);
+        setUploadedFile(null);
+        setShowUploadModal(false);
+      }, 1500);
+    } finally {
+      setUploading(false);
+    }
   };
 
-  const handleNewDocSubmit = () => {
+  const handleNewDocSubmit = async () => {
     if (!newDocForm.title || !newDocForm.company) return;
-    const newDoc: DocumentItem = {
-      id: documents.length + 1,
-      ...newDocForm,
-    };
-    setDocuments((prev) => [newDoc, ...prev]);
+    const input: NewDocumentInput = { ...newDocForm };
+    const newDoc = await documentService.createDocument(input);
+    setDocuments((prev) => [newDoc, ...prev.filter((doc) => doc.id !== newDoc.id)]);
     setShowNewModal(false);
     setNewDocForm({ title: "", company: "", category: "", startDate: "", endDate: "", status: "Active" });
   };
@@ -134,7 +123,13 @@ const DocumentsPage: React.FC = () => {
     ghostBtn: { background: "#ffffff", color: "#111827", border: "1px solid rgba(0,0,0,0.08)", padding: "10px 20px", borderRadius: "12px", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "8px", fontSize: "14px" },
     statCard: { backgroundColor: "#ffffff", border: "1px solid rgba(0,0,0,0.08)", borderRadius: "16px", padding: "18px" },
     searchInput: { width: "100%", backgroundColor: "#ffffff", border: "1px solid rgba(0,0,0,0.08)", borderRadius: "12px", padding: "12px 16px 12px 42px", color: "#111827", outline: "none", fontSize: "14px", boxSizing: "border-box" as const },
-    tableWrap: { backgroundColor: "#ffffff", border: "1px solid rgba(0,0,0,0.08)", borderRadius: "16px", overflowX: "auto" as const },
+    tableWrap: {
+      backgroundColor: "#ffffff",
+      border: "1px solid rgba(0,0,0,0.08)",
+      borderRadius: "16px",
+      overflowX: "auto" as const,
+      scrollbarWidth: "thin" as const,
+    },
     table: { width: "100%", borderCollapse: "collapse" as const, minWidth: "850px" },
     th: { textAlign: "left" as const, fontSize: "12px", color: "#6b7280", textTransform: "uppercase" as const, letterSpacing: "0.5px", padding: "16px 18px", borderBottom: "1px solid rgba(0,0,0,0.08)", backgroundColor: "#f9fafb" },
     td: { padding: "16px 18px", borderBottom: "1px solid rgba(0,0,0,0.06)", color: "#111827", fontSize: "14px" },
@@ -204,7 +199,7 @@ const DocumentsPage: React.FC = () => {
                 <input type="text" placeholder="Search documents..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} style={styles.searchInput} />
               </div>
 
-              <div style={styles.tableWrap}>
+              <div style={styles.tableWrap} className="documents-table-wrap">
                 <table style={styles.table}>
                   <thead>
                     <tr>
@@ -214,14 +209,20 @@ const DocumentsPage: React.FC = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredDocuments.length > 0 ? (
+                    {loading ? (
+                      <tr>
+                        <td colSpan={7} style={{ ...styles.td, textAlign: "center", color: "#6b7280", padding: "28px" }}>
+                          Loading documents...
+                        </td>
+                      </tr>
+                    ) : filteredDocuments.length > 0 ? (
                       filteredDocuments.map((doc) => (
                         <tr key={doc.id} onClick={() => navigate(`/language-intelligence/documents/${doc.id}`)} style={{ cursor: "pointer" }}
                           onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#f5f3ff")}
                           onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "")}>
                           <td style={styles.td}>
                             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                              <FileText size={15} color="#a78bfa" />
+                              <FileText size={16} color="#a78bfa" style={{ flexShrink: 0 }} />
                               {doc.title}
                             </div>
                           </td>
@@ -304,9 +305,9 @@ const DocumentsPage: React.FC = () => {
                   </div>
                 )}
 
-                <button style={{ ...styles.purpleBtn, width: "100%", justifyContent: "center", opacity: uploadedFile ? 1 : 0.5 }}
-                  onClick={handleUploadSubmit} disabled={!uploadedFile}>
-                  <Upload size={16} /> Upload Document
+                <button style={{ ...styles.purpleBtn, width: "100%", justifyContent: "center", opacity: uploadedFile && !uploading ? 1 : 0.5 }}
+                  onClick={handleUploadSubmit} disabled={!uploadedFile || uploading}>
+                  <Upload size={16} /> {uploading ? "Uploading..." : "Upload Document"}
                 </button>
               </>
             )}
@@ -371,6 +372,22 @@ const DocumentsPage: React.FC = () => {
           </div>
         </div>
       )}
+      <style>{`
+        .documents-table-wrap::-webkit-scrollbar {
+          height: 8px;
+        }
+        .documents-table-wrap::-webkit-scrollbar-track {
+          background: #f3f4f6;
+          border-radius: 999px;
+        }
+        .documents-table-wrap::-webkit-scrollbar-thumb {
+          background: #d1d5db;
+          border-radius: 999px;
+        }
+        .documents-table-wrap::-webkit-scrollbar-button {
+          display: none;
+        }
+      `}</style>
     </div>
   );
 };

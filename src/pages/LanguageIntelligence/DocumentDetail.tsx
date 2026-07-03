@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   ArrowLeft,
@@ -11,22 +11,8 @@ import {
   X,
   CheckCircle,
 } from "lucide-react";
-
-type DocumentStatus = "Active" | "Pending" | "Expired";
-
-type DocumentItem = {
-  id: number;
-  title: string;
-  company: string;
-  category: string;
-  startDate: string;
-  endDate: string;
-  status: DocumentStatus;
-  uploadedBy: string;
-  fileSize: string;
-  fileName: string;
-  tags: string[];
-};
+import type { DocumentRecord, DocumentStatus } from "../../types/document";
+import { documentService } from "../../services/documentService";
 
 type ActivityItem = {
   id: number;
@@ -46,61 +32,6 @@ type EditForm = {
 };
 
 type StringEditField = Exclude<keyof EditForm, "status">;
-
-const mockDocuments: DocumentItem[] = [
-  {
-    id: 1,
-    title: "Master Service Agreement",
-    company: "OpenWave Technologies",
-    category: "Legal",
-    startDate: "2026-01-10",
-    endDate: "2027-01-10",
-    status: "Active",
-    uploadedBy: "Yves K.",
-    fileSize: "2.4 MB",
-    fileName: "MSA_OpenWave_2026.pdf",
-    tags: ["MSA", "Legal", "2026"],
-  },
-  {
-    id: 2,
-    title: "Employment Document",
-    company: "Deepiri Inc.",
-    category: "HR",
-    startDate: "2026-02-14",
-    endDate: "2028-02-14",
-    status: "Active",
-    uploadedBy: "Yves K.",
-    fileSize: "1.1 MB",
-    fileName: "Employment_Deepiri_2026.pdf",
-    tags: ["HR", "Employment"],
-  },
-  {
-    id: 3,
-    title: "Vendor Supply Agreement",
-    company: "NorthStar Supplies",
-    category: "Procurement",
-    startDate: "2026-03-01",
-    endDate: "2026-12-31",
-    status: "Pending",
-    uploadedBy: "Yves K.",
-    fileSize: "890 KB",
-    fileName: "Vendor_NorthStar_2026.pdf",
-    tags: ["Vendor", "Procurement"],
-  },
-  {
-    id: 4,
-    title: "Partnership Agreement",
-    company: "Vertex Labs",
-    category: "Business",
-    startDate: "2024-05-12",
-    endDate: "2025-05-12",
-    status: "Expired",
-    uploadedBy: "Yves K.",
-    fileSize: "3.2 MB",
-    fileName: "Partnership_Vertex_2024.pdf",
-    tags: ["Partnership", "Business"],
-  },
-];
 
 const mockActivity: ActivityItem[] = [
   {
@@ -138,24 +69,59 @@ const DocumentDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  const docFromRoute = mockDocuments.find((d) => d.id === Number(id));
-
+  const [loading, setLoading] = useState(true);
+  const [liveDoc, setLiveDoc] = useState<DocumentRecord | undefined>();
   const [newTag, setNewTag] = useState("");
   const [addingTag, setAddingTag] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
+  const [showFullView, setShowFullView] = useState(false);
   const [shareCopied, setShareCopied] = useState(false);
-  const [tags, setTags] = useState<string[]>(docFromRoute?.tags ?? []);
-  const [liveDoc, setLiveDoc] = useState<DocumentItem | undefined>(docFromRoute);
+  const [tags, setTags] = useState<string[]>([]);
   const [editForm, setEditForm] = useState<EditForm>({
-    title: docFromRoute?.title ?? "",
-    company: docFromRoute?.company ?? "",
-    category: docFromRoute?.category ?? "",
-    startDate: docFromRoute?.startDate ?? "",
-    endDate: docFromRoute?.endDate ?? "",
-    status: docFromRoute?.status ?? "Active",
+    title: "",
+    company: "",
+    category: "",
+    startDate: "",
+    endDate: "",
+    status: "Active",
   });
+
+  useEffect(() => {
+    if (!id) {
+      setLoading(false);
+      return;
+    }
+    let active = true;
+    documentService.getDocumentById(id).then((doc) => {
+      if (!active) return;
+      setLiveDoc(doc);
+      setTags(doc?.tags ?? []);
+      if (doc) {
+        setEditForm({
+          title: doc.title,
+          company: doc.company,
+          category: doc.category,
+          startDate: doc.startDate,
+          endDate: doc.endDate,
+          status: doc.status,
+        });
+      }
+      setLoading(false);
+    });
+    return () => {
+      active = false;
+    };
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div style={{ padding: "80px 20px", textAlign: "center", fontFamily: "Inter, sans-serif" }}>
+        <p style={{ color: "#6b7280" }}>Loading document...</p>
+      </div>
+    );
+  }
 
   if (!liveDoc) {
     return (
@@ -233,9 +199,28 @@ const DocumentDetail: React.FC = () => {
   };
 
   const handleSave = () => {
-    setLiveDoc({ ...liveDoc, ...editForm });
+    if (!liveDoc) return;
+    const updated = documentService.updateDocument(liveDoc.id, { ...editForm, tags });
+    if (updated) {
+      setLiveDoc(updated);
+      setTags(updated.tags ?? tags);
+    }
     setShowEditModal(false);
   };
+
+  const handleDelete = () => {
+    if (!liveDoc) return;
+    documentService.deleteDocument(liveDoc.id);
+    setShowDeleteConfirm(false);
+    navigate("/language-intelligence/documents");
+  };
+
+  const handleDownload = () => {
+    if (!liveDoc) return;
+    documentService.downloadDocument(liveDoc);
+  };
+
+  const previewUrl = liveDoc.documentUrl || liveDoc.fileDataUrl;
 
   const handleStringFieldChange = (key: StringEditField, value: string) => {
     setEditForm((prev) => ({ ...prev, [key]: value }));
@@ -333,7 +318,7 @@ const DocumentDetail: React.FC = () => {
             <button style={styles.ghostBtn} onClick={() => setShowShareModal(true)}>
               <Share2 size={15} /> Share
             </button>
-            <button style={styles.ghostBtn}>
+            <button style={styles.ghostBtn} onClick={handleDownload}>
               <Download size={15} /> Download
             </button>
             <button style={styles.purpleBtn} onClick={() => setShowEditModal(true)}>
@@ -363,6 +348,7 @@ const DocumentDetail: React.FC = () => {
                 <span style={styles.cardTitle}>Document preview</span>
                 <button
                   style={{ ...styles.ghostBtn, padding: "6px 12px", fontSize: "12px" }}
+                  onClick={() => setShowFullView(true)}
                 >
                   Full view
                 </button>
@@ -402,10 +388,10 @@ const DocumentDetail: React.FC = () => {
                       fontSize: "14px",
                     }}
                   >
-                    {liveDoc.fileName}
+                    {liveDoc.fileName || `${liveDoc.title}.pdf`}
                   </p>
                   <p style={{ margin: 0, color: "#9ca3af", fontSize: "12px" }}>
-                    {liveDoc.fileSize}
+                    {liveDoc.fileSize || "—"}
                   </p>
                   <button
                     style={{
@@ -414,6 +400,7 @@ const DocumentDetail: React.FC = () => {
                       fontSize: "13px",
                       padding: "8px 20px",
                     }}
+                    onClick={handleDownload}
                   >
                     <Download size={14} /> Download file
                   </button>
@@ -486,9 +473,9 @@ const DocumentDetail: React.FC = () => {
                     { label: "Category", value: liveDoc.category },
                     { label: "Start date", value: liveDoc.startDate },
                     { label: "End date", value: liveDoc.endDate },
-                    { label: "Uploaded by", value: liveDoc.uploadedBy },
-                    { label: "File size", value: liveDoc.fileSize },
-                    { label: "File name", value: liveDoc.fileName },
+                    { label: "Uploaded by", value: liveDoc.uploadedBy || "—" },
+                    { label: "File size", value: liveDoc.fileSize || "—" },
+                    { label: "File name", value: liveDoc.fileName || "—" },
                   ] as const
                 ).map(({ label, value }, index, arr) => (
                   <div
@@ -689,10 +676,7 @@ const DocumentDetail: React.FC = () => {
                 </button>
                 <button
                   style={{ ...styles.redBtn, flex: 1, justifyContent: "center" }}
-                  onClick={() => {
-                    setShowDeleteConfirm(false);
-                    navigate("/language-intelligence/documents");
-                  }}
+                  onClick={handleDelete}
                 >
                   <Trash2 size={15} /> Delete
                 </button>
@@ -814,6 +798,41 @@ const DocumentDetail: React.FC = () => {
               <p style={{ margin: "10px 0 0", color: "#15803d", fontSize: "13px" }}>
                 Link copied to clipboard!
               </p>
+            )}
+          </div>
+        </div>
+      )}
+
+      {showFullView && (
+        <div style={{ ...styles.overlay, zIndex: 1100 }} onClick={() => setShowFullView(false)}>
+          <div
+            style={{
+              ...styles.modal,
+              maxWidth: "90vw",
+              width: "960px",
+              height: "85vh",
+              display: "flex",
+              flexDirection: "column",
+              padding: "20px",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
+              <h2 style={{ margin: 0, fontSize: "18px", color: "#111827" }}>{liveDoc.fileName || liveDoc.title}</h2>
+              <button onClick={() => setShowFullView(false)} style={{ background: "none", border: "none", cursor: "pointer" }}>
+                <X size={20} />
+              </button>
+            </div>
+            {previewUrl ? (
+              <iframe
+                title={liveDoc.title}
+                src={previewUrl}
+                style={{ flex: 1, width: "100%", border: "1px solid rgba(0,0,0,0.08)", borderRadius: "12px" }}
+              />
+            ) : (
+              <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", color: "#6b7280" }}>
+                Preview unavailable for this document.
+              </div>
             )}
           </div>
         </div>
