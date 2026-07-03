@@ -220,7 +220,31 @@ const DocumentDetail: React.FC = () => {
     documentService.downloadDocument(liveDoc);
   };
 
-  const previewUrl = liveDoc.documentUrl || liveDoc.fileDataUrl;
+  const sanitizePreviewUrl = (value?: string): string | undefined => {
+    if (!value) return undefined;
+
+    const trimmed = value.trim();
+
+    if (trimmed.startsWith("data:")) {
+      const lower = trimmed.toLowerCase();
+      const isAllowedData =
+        lower.startsWith("data:application/pdf;") || lower.startsWith("data:image/");
+      return isAllowedData ? trimmed : undefined;
+    }
+
+    try {
+      const parsed = new URL(trimmed, window.location.origin);
+      if (parsed.protocol === "http:" || parsed.protocol === "https:") {
+        return parsed.toString();
+      }
+    } catch {
+      return undefined;
+    }
+
+    return undefined;
+  };
+
+  const previewUrl = sanitizePreviewUrl(liveDoc.documentUrl || liveDoc.fileDataUrl);
 
   const handleStringFieldChange = (key: StringEditField, value: string) => {
     setEditForm((prev) => ({ ...prev, [key]: value }));
