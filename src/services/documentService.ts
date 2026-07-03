@@ -79,6 +79,25 @@ const formatFileSize = (bytes: number): string => {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 };
 
+const getSafeDownloadUrl = (value: string | undefined): string | undefined => {
+  if (!value) return undefined;
+  try {
+    const parsed = new URL(value, window.location.origin);
+    const protocol = parsed.protocol.toLowerCase();
+    if (
+      protocol === "http:" ||
+      protocol === "https:" ||
+      protocol === "blob:" ||
+      protocol === "data:"
+    ) {
+      return parsed.href;
+    }
+  } catch {
+    // Invalid URL: reject.
+  }
+  return undefined;
+};
+
 const fileToDataUrl = (file: File): Promise<string> =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -196,7 +215,7 @@ export const documentService = {
   },
 
   downloadDocument: (doc: DocumentRecord): void => {
-    const url = doc.documentUrl || doc.fileDataUrl;
+    const url = getSafeDownloadUrl(doc.documentUrl || doc.fileDataUrl);
     if (!url) return;
     const anchor = document.createElement("a");
     anchor.href = url;
