@@ -224,11 +224,12 @@ const DocumentDetail: React.FC = () => {
     if (!value) return undefined;
 
     const trimmed = value.trim();
-    const lower = trimmed.toLowerCase();
 
-    // Allow only PDF data URLs for inline iframe previews.
-    if (lower.startsWith("data:")) {
-      return lower.startsWith("data:application/pdf;") ? trimmed : undefined;
+    if (trimmed.startsWith("data:")) {
+      const lower = trimmed.toLowerCase();
+      const isAllowedData =
+        lower.startsWith("data:application/pdf;") || lower.startsWith("data:image/");
+      return isAllowedData ? trimmed : undefined;
     }
 
     try {
