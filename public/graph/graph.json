@@ -1,0 +1,1448 @@
+{
+  "nodes": [
+    {
+      "id": "app/App.test.tsx",
+      "name": "App.test",
+      "type": "module",
+      "relPath": "app/App.test.tsx",
+      "exports": [],
+      "externalDeps": [
+        "vitest",
+        "@testing-library/react",
+        "react-router-dom"
+      ],
+      "componentsUsed": [
+        "MemoryRouter",
+        "App"
+      ],
+      "hooksUsed": [],
+      "lines": 19,
+      "docstrings": [
+        "AuthGuard should redirect \"/\" -> \"/login\" for a signed-out user,",
+        "and the lazy-loaded Login page should resolve past the Suspense fallback."
+      ]
+    },
+    {
+      "id": "app/App.tsx",
+      "name": "App",
+      "type": "component",
+      "relPath": "app/App.tsx",
+      "exports": [
+        "App",
+        "default"
+      ],
+      "externalDeps": [
+        "react-query"
+      ],
+      "componentsUsed": [
+        "QueryClientProvider",
+        "AppRouter"
+      ],
+      "hooksUsed": [],
+      "lines": 17,
+      "docstrings": []
+    },
+    {
+      "id": "app/AuthGuard.tsx",
+      "name": "AuthGuard",
+      "type": "module",
+      "relPath": "app/AuthGuard.tsx",
+      "exports": [
+        "AuthGuard"
+      ],
+      "externalDeps": [
+        "react",
+        "react-router-dom"
+      ],
+      "componentsUsed": [
+        "Navigate"
+      ],
+      "hooksUsed": [
+        "useAuthHydrated",
+        "useSyncExternalStore",
+        "useAuthStore"
+      ],
+      "lines": 37,
+      "docstrings": []
+    },
+    {
+      "id": "app/Router.tsx",
+      "name": "Router",
+      "type": "module",
+      "relPath": "app/Router.tsx",
+      "exports": [
+        "AppRouter"
+      ],
+      "externalDeps": [
+        "react",
+        "react-router-dom"
+      ],
+      "componentsUsed": [
+        "Suspense",
+        "PageLoader",
+        "Routes",
+        "Route",
+        "Login",
+        "Contact",
+        "AuthGuard",
+        "ImmersivePage",
+        "Shell",
+        "Home",
+        "EventRiver",
+        "DependencyMap",
+        "Ops",
+        "JobsDashboard",
+        "RegistryDashboard",
+        "TrussDashboard",
+        "TelemetryDashboard",
+        "Pulse",
+        "Sankey",
+        "Launchpad",
+        "AIWorkspace",
+        "TeamOps",
+        "Onboarding",
+        "CodebaseGraph",
+        "PRImpact",
+        "Navigate"
+      ],
+      "hooksUsed": [],
+      "lines": 85,
+      "docstrings": []
+    },
+    {
+      "id": "app/Shell.tsx",
+      "name": "Shell",
+      "type": "module",
+      "relPath": "app/Shell.tsx",
+      "exports": [
+        "Shell"
+      ],
+      "externalDeps": [
+        "react-router-dom"
+      ],
+      "componentsUsed": [
+        "Sidebar",
+        "Topbar",
+        "Outlet",
+        "CyrexSidebar"
+      ],
+      "hooksUsed": [
+        "useHealthPoll",
+        "useImmersiveStatus",
+        "useEventStream",
+        "useUIStore"
+      ],
+      "lines": 45,
+      "docstrings": [
+        "Start all background polling + WebSocket on mount"
+      ]
+    },
+    {
+      "id": "components/layout/CyrexSidebar.tsx",
+      "name": "CyrexSidebar",
+      "type": "component",
+      "relPath": "components/layout/CyrexSidebar.tsx",
+      "exports": [
+        "CyrexSidebar"
+      ],
+      "externalDeps": [
+        "react",
+        "framer-motion"
+      ],
+      "componentsUsed": [],
+      "hooksUsed": [
+        "useUIStore",
+        "useState"
+      ],
+      "lines": 121,
+      "docstrings": [
+        "localhost:8000/chat\", {"
+      ]
+    },
+    {
+      "id": "components/layout/Sidebar.tsx",
+      "name": "Sidebar",
+      "type": "component",
+      "relPath": "components/layout/Sidebar.tsx",
+      "exports": [
+        "Sidebar"
+      ],
+      "externalDeps": [
+        "react-router-dom",
+        "framer-motion"
+      ],
+      "componentsUsed": [
+        "NavLink"
+      ],
+      "hooksUsed": [
+        "useUIStore"
+      ],
+      "lines": 100,
+      "docstrings": []
+    },
+    {
+      "id": "components/layout/Topbar.tsx",
+      "name": "Topbar",
+      "type": "component",
+      "relPath": "components/layout/Topbar.tsx",
+      "exports": [
+        "Topbar"
+      ],
+      "externalDeps": [
+        "react-router-dom",
+        "framer-motion"
+      ],
+      "componentsUsed": [
+        "AnimatePresence",
+        "HealthDots",
+        "ImmersiveButton"
+      ],
+      "hooksUsed": [
+        "useHealthStore",
+        "useUIStore",
+        "useNavigate",
+        "useLocation",
+        "useAuthStore",
+        "usePresence"
+      ],
+      "lines": 185,
+      "docstrings": []
+    },
+    {
+      "id": "constants/query.ts",
+      "name": "query",
+      "type": "module",
+      "relPath": "constants/query.ts",
+      "exports": [
+        "OPS_DASHBOARD_STALE_TIME"
+      ],
+      "externalDeps": [],
+      "componentsUsed": [],
+      "hooksUsed": [],
+      "lines": 3,
+      "docstrings": [
+        "Shared Ops dashboard react-query cache window (30s)."
+      ]
+    },
+    {
+      "id": "hooks/useEventStream.ts",
+      "name": "useEventStream",
+      "type": "hook",
+      "relPath": "hooks/useEventStream.ts",
+      "exports": [
+        "useEventStream"
+      ],
+      "externalDeps": [
+        "react",
+        "socket.io-client",
+        "@deepiri/shared"
+      ],
+      "componentsUsed": [
+        "Socket"
+      ],
+      "hooksUsed": [
+        "useEventStream",
+        "useEventStore",
+        "useEffect"
+      ],
+      "lines": 57,
+      "docstrings": [
+        "Live events from deepiri-realtime-gateway.\rReplaces hub-server WebSocketRelay (ws://localhost:5200/ws)."
+      ]
+    },
+    {
+      "id": "hooks/useGraphData.ts",
+      "name": "useGraphData",
+      "type": "hook",
+      "relPath": "hooks/useGraphData.ts",
+      "exports": [
+        "GraphNode",
+        "GraphLink",
+        "GraphData",
+        "useGraphData"
+      ],
+      "externalDeps": [
+        "react"
+      ],
+      "componentsUsed": [
+        "GraphData"
+      ],
+      "hooksUsed": [
+        "useGraphData",
+        "useState",
+        "useEffect"
+      ],
+      "lines": 55,
+      "docstrings": []
+    },
+    {
+      "id": "hooks/useHealthPoll.ts",
+      "name": "useHealthPoll",
+      "type": "hook",
+      "relPath": "hooks/useHealthPoll.ts",
+      "exports": [
+        "useHealthPoll"
+      ],
+      "externalDeps": [
+        "react",
+        "@deepiri/shared"
+      ],
+      "componentsUsed": [],
+      "hooksUsed": [
+        "useHealthPoll",
+        "useHealthStore",
+        "useCallback",
+        "useEffect"
+      ],
+      "lines": 74,
+      "docstrings": [
+        "Poll deepiri-registry for service catalog + health.\rReplaces hub-server HealthPoller (/health/all).\rReturns `refresh` so callers (e.g. an Ops dashboard's refresh button) can\rtrigger an on-demand poll using the exact same fetch/fallback logic as the\rbackground interval, instead of duplicating registry calls elsewhere.",
+        "If registry returned empty, try poll endpoint to refresh then re-list",
+        "Silently fail — UI shows last known state"
+      ]
+    },
+    {
+      "id": "hooks/useImmersiveStatus.ts",
+      "name": "useImmersiveStatus",
+      "type": "hook",
+      "relPath": "hooks/useImmersiveStatus.ts",
+      "exports": [
+        "useImmersiveStatus"
+      ],
+      "externalDeps": [
+        "react"
+      ],
+      "componentsUsed": [],
+      "hooksUsed": [
+        "useImmersiveStatus",
+        "useUIStore",
+        "useEffect"
+      ],
+      "lines": 15,
+      "docstrings": [
+        "Immersive is a route in this same app (/immersive), so it is always \"live\".\rReplaces hub-server ImmersiveChecker pinging a separate :5174 container."
+      ]
+    },
+    {
+      "id": "hooks/usePresence.ts",
+      "name": "usePresence",
+      "type": "hook",
+      "relPath": "hooks/usePresence.ts",
+      "exports": [
+        "PresencePeer",
+        "usePresence"
+      ],
+      "externalDeps": [
+        "react",
+        "socket.io-client"
+      ],
+      "componentsUsed": [
+        "PresencePeer",
+        "Socket"
+      ],
+      "hooksUsed": [
+        "usePresence",
+        "useAuthStore",
+        "useState",
+        "useEffect"
+      ],
+      "lines": 96,
+      "docstrings": [
+        "Multi-user presence via platform realtime-gateway (not a frontend-only multiplayer stack).\rPeers announce themselves; gateway fans out presence:update events.\rRoom / auth hardening belongs in deepiri-realtime-gateway."
+      ]
+    },
+    {
+      "id": "immersive/controls/SceneControls.tsx",
+      "name": "SceneControls",
+      "type": "module",
+      "relPath": "immersive/controls/SceneControls.tsx",
+      "exports": [
+        "SceneControls"
+      ],
+      "externalDeps": [
+        "react-router-dom"
+      ],
+      "componentsUsed": [
+        "Link"
+      ],
+      "hooksUsed": [
+        "useSceneStore"
+      ],
+      "lines": 204,
+      "docstrings": []
+    },
+    {
+      "id": "immersive/hooks/useHubConnection.ts",
+      "name": "useHubConnection",
+      "type": "hook",
+      "relPath": "immersive/hooks/useHubConnection.ts",
+      "exports": [
+        "useHubConnection"
+      ],
+      "externalDeps": [
+        "react",
+        "socket.io-client",
+        "@deepiri/shared"
+      ],
+      "componentsUsed": [
+        "Socket"
+      ],
+      "hooksUsed": [
+        "useHubConnection",
+        "useSceneStore",
+        "useEffect"
+      ],
+      "lines": 90,
+      "docstrings": [
+        "Immersive data plane: registry for health, realtime-gateway for events.\rReplaces hub-server REST + WS relay."
+      ]
+    },
+    {
+      "id": "immersive/hooks/usePortalAuth.ts",
+      "name": "usePortalAuth",
+      "type": "hook",
+      "relPath": "immersive/hooks/usePortalAuth.ts",
+      "exports": [
+        "usePortalAuth"
+      ],
+      "externalDeps": [
+        "react"
+      ],
+      "componentsUsed": [],
+      "hooksUsed": [
+        "usePortalAuth",
+        "useSceneStore",
+        "useAuthStore",
+        "useEffect"
+      ],
+      "lines": 16,
+      "docstrings": [
+        "Same-app auth: read JWT from portal auth store (no postMessage / second origin)."
+      ]
+    },
+    {
+      "id": "immersive/panels/ServicePanel.tsx",
+      "name": "ServicePanel",
+      "type": "module",
+      "relPath": "immersive/panels/ServicePanel.tsx",
+      "exports": [
+        "ServicePanel"
+      ],
+      "externalDeps": [
+        "react-router-dom",
+        "@deepiri/shared"
+      ],
+      "componentsUsed": [
+        "Link"
+      ],
+      "hooksUsed": [
+        "useSceneStore"
+      ],
+      "lines": 70,
+      "docstrings": []
+    },
+    {
+      "id": "immersive/scene/Planet.tsx",
+      "name": "Planet",
+      "type": "module",
+      "relPath": "immersive/scene/Planet.tsx",
+      "exports": [
+        "PlanetProps",
+        "Planet"
+      ],
+      "externalDeps": [
+        "react",
+        "@react-three/fiber",
+        "@react-three/drei",
+        "three",
+        "@deepiri/shared"
+      ],
+      "componentsUsed": [
+        "THREE",
+        "Billboard",
+        "Text"
+      ],
+      "hooksUsed": [
+        "useRef",
+        "useFrame"
+      ],
+      "lines": 68,
+      "docstrings": [
+        "support both old + new formats",
+        "Map old health strings to new status colors"
+      ]
+    },
+    {
+      "id": "immersive/scene/UniverseScene.tsx",
+      "name": "UniverseScene",
+      "type": "module",
+      "relPath": "immersive/scene/UniverseScene.tsx",
+      "exports": [
+        "UniverseScene"
+      ],
+      "externalDeps": [
+        "react",
+        "@react-three/fiber",
+        "@react-three/drei",
+        "three"
+      ],
+      "componentsUsed": [
+        "THREE",
+        "Canvas",
+        "Stars",
+        "Planet",
+        "OrbitControls"
+      ],
+      "hooksUsed": [
+        "useHubConnection",
+        "usePortalAuth",
+        "useSceneStore"
+      ],
+      "lines": 97,
+      "docstrings": [
+        "Map service category to orbit ring",
+        "Connect to Hub Server on mount",
+        "Stagger orbit radius slightly per service to avoid overlap"
+      ]
+    },
+    {
+      "id": "immersive/store/sceneStore.ts",
+      "name": "sceneStore",
+      "type": "module",
+      "relPath": "immersive/store/sceneStore.ts",
+      "exports": [
+        "useSceneStore"
+      ],
+      "externalDeps": [
+        "zustand",
+        "@deepiri/shared"
+      ],
+      "componentsUsed": [
+        "SceneState"
+      ],
+      "hooksUsed": [],
+      "lines": 51,
+      "docstrings": [
+        "Services from deepiri-registry",
+        "Events for particles (realtime-gateway)",
+        "Auth from portal auth store"
+      ]
+    },
+    {
+      "id": "main.tsx",
+      "name": "main",
+      "type": "module",
+      "relPath": "main.tsx",
+      "exports": [],
+      "externalDeps": [
+        "react",
+        "react-dom/client",
+        "react-router-dom"
+      ],
+      "componentsUsed": [
+        "React",
+        "BrowserRouter",
+        "App"
+      ],
+      "hooksUsed": [],
+      "lines": 14,
+      "docstrings": []
+    },
+    {
+      "id": "pages/AIWorkspace/AIWorkspace.tsx",
+      "name": "AIWorkspace",
+      "type": "page",
+      "relPath": "pages/AIWorkspace/AIWorkspace.tsx",
+      "exports": [
+        "AIWorkspace",
+        "default"
+      ],
+      "externalDeps": [
+        "framer-motion"
+      ],
+      "componentsUsed": [],
+      "hooksUsed": [],
+      "lines": 12,
+      "docstrings": []
+    },
+    {
+      "id": "pages/CodebaseGraph/CodebaseGraph.tsx",
+      "name": "CodebaseGraph",
+      "type": "page",
+      "relPath": "pages/CodebaseGraph/CodebaseGraph.tsx",
+      "exports": [
+        "default"
+      ],
+      "externalDeps": [
+        "react",
+        "framer-motion",
+        "lucide-react"
+      ],
+      "componentsUsed": [
+        "DetailPanelProps",
+        "Zap",
+        "Box",
+        "Database",
+        "GitBranch",
+        "Link2",
+        "StatsBarProps",
+        "Network",
+        "Search",
+        "ExternalLink",
+        "FileText",
+        "Download",
+        "HTMLCanvasElement",
+        "HTMLDivElement",
+        "GraphData",
+        "GraphNode",
+        "Set",
+        "ResolvedGraphLink",
+        "StatsBar",
+        "RefreshCw",
+        "Minimize2",
+        "Maximize2",
+        "AnimatePresence",
+        "DetailPanel"
+      ],
+      "hooksUsed": [
+        "useMemo",
+        "useState",
+        "useRef",
+        "useEffect",
+        "useCallback"
+      ],
+      "lines": 803,
+      "docstrings": []
+    },
+    {
+      "id": "pages/Contact/Contact.tsx",
+      "name": "Contact",
+      "type": "page",
+      "relPath": "pages/Contact/Contact.tsx",
+      "exports": [
+        "Contact",
+        "default"
+      ],
+      "externalDeps": [
+        "react",
+        "framer-motion"
+      ],
+      "componentsUsed": [],
+      "hooksUsed": [
+        "useState"
+      ],
+      "lines": 151,
+      "docstrings": []
+    },
+    {
+      "id": "pages/DependencyMap/DependencyMap.tsx",
+      "name": "DependencyMap",
+      "type": "page",
+      "relPath": "pages/DependencyMap/DependencyMap.tsx",
+      "exports": [
+        "DependencyMap",
+        "default"
+      ],
+      "externalDeps": [
+        "framer-motion"
+      ],
+      "componentsUsed": [],
+      "hooksUsed": [],
+      "lines": 12,
+      "docstrings": []
+    },
+    {
+      "id": "pages/EventRiver/EventRiver.tsx",
+      "name": "EventRiver",
+      "type": "page",
+      "relPath": "pages/EventRiver/EventRiver.tsx",
+      "exports": [
+        "EventRiver",
+        "default"
+      ],
+      "externalDeps": [
+        "framer-motion"
+      ],
+      "componentsUsed": [],
+      "hooksUsed": [],
+      "lines": 12,
+      "docstrings": []
+    },
+    {
+      "id": "pages/Home/Home.tsx",
+      "name": "Home",
+      "type": "page",
+      "relPath": "pages/Home/Home.tsx",
+      "exports": [
+        "Home",
+        "default"
+      ],
+      "externalDeps": [
+        "framer-motion",
+        "react-router-dom",
+        "@deepiri/shared"
+      ],
+      "componentsUsed": [],
+      "hooksUsed": [
+        "useNavigate",
+        "useHealthStore",
+        "useUIStore"
+      ],
+      "lines": 83,
+      "docstrings": []
+    },
+    {
+      "id": "pages/Immersive/ImmersivePage.tsx",
+      "name": "ImmersivePage",
+      "type": "page",
+      "relPath": "pages/Immersive/ImmersivePage.tsx",
+      "exports": [
+        "ImmersivePage",
+        "default"
+      ],
+      "externalDeps": [],
+      "componentsUsed": [
+        "UniverseScene",
+        "SceneControls",
+        "ServicePanel"
+      ],
+      "hooksUsed": [],
+      "lines": 27,
+      "docstrings": [
+        "Immersive 3D universe — same app, same container, route /immersive.\rPreviously a separate Vite app on :5174."
+      ]
+    },
+    {
+      "id": "pages/Launchpad/Launchpad.tsx",
+      "name": "Launchpad",
+      "type": "page",
+      "relPath": "pages/Launchpad/Launchpad.tsx",
+      "exports": [
+        "Launchpad",
+        "default"
+      ],
+      "externalDeps": [
+        "framer-motion"
+      ],
+      "componentsUsed": [],
+      "hooksUsed": [],
+      "lines": 12,
+      "docstrings": []
+    },
+    {
+      "id": "pages/Login/Login.tsx",
+      "name": "Login",
+      "type": "page",
+      "relPath": "pages/Login/Login.tsx",
+      "exports": [
+        "Login",
+        "default"
+      ],
+      "externalDeps": [
+        "react",
+        "react-router-dom",
+        "framer-motion"
+      ],
+      "componentsUsed": [],
+      "hooksUsed": [
+        "useNavigate",
+        "useState"
+      ],
+      "lines": 91,
+      "docstrings": []
+    },
+    {
+      "id": "pages/Onboarding/Onboarding.tsx",
+      "name": "Onboarding",
+      "type": "page",
+      "relPath": "pages/Onboarding/Onboarding.tsx",
+      "exports": [
+        "Onboarding",
+        "default"
+      ],
+      "externalDeps": [
+        "framer-motion"
+      ],
+      "componentsUsed": [],
+      "hooksUsed": [],
+      "lines": 12,
+      "docstrings": []
+    },
+    {
+      "id": "pages/Ops/JobsDashboard.tsx",
+      "name": "JobsDashboard",
+      "type": "page",
+      "relPath": "pages/Ops/JobsDashboard.tsx",
+      "exports": [
+        "default"
+      ],
+      "externalDeps": [
+        "react",
+        "react-router-dom",
+        "react-query",
+        "lucide-react"
+      ],
+      "componentsUsed": [
+        "JobStatus",
+        "JobRecord",
+        "Record",
+        "Link",
+        "ArrowLeft",
+        "RefreshCw",
+        "ChevronUp",
+        "ChevronDown",
+        "XCircle",
+        "RotateCcw"
+      ],
+      "hooksUsed": [
+        "useQueryClient",
+        "useQuery"
+      ],
+      "lines": 185,
+      "docstrings": []
+    },
+    {
+      "id": "pages/Ops/Ops.tsx",
+      "name": "Ops",
+      "type": "page",
+      "relPath": "pages/Ops/Ops.tsx",
+      "exports": [
+        "Ops",
+        "default"
+      ],
+      "externalDeps": [
+        "react-router-dom",
+        "framer-motion",
+        "lucide-react",
+        "@deepiri/shared"
+      ],
+      "componentsUsed": [
+        "RefreshCw",
+        "Link"
+      ],
+      "hooksUsed": [
+        "useHealthPoll",
+        "useHealthStore"
+      ],
+      "lines": 134,
+      "docstrings": []
+    },
+    {
+      "id": "pages/Ops/RegistryDashboard.tsx",
+      "name": "RegistryDashboard",
+      "type": "page",
+      "relPath": "pages/Ops/RegistryDashboard.tsx",
+      "exports": [
+        "default"
+      ],
+      "externalDeps": [
+        "react",
+        "react-router-dom",
+        "react-query",
+        "lucide-react"
+      ],
+      "componentsUsed": [
+        "Tab",
+        "Link",
+        "ArrowLeft",
+        "RefreshCw"
+      ],
+      "hooksUsed": [
+        "useQueryClient",
+        "useQuery"
+      ],
+      "lines": 177,
+      "docstrings": []
+    },
+    {
+      "id": "pages/Ops/TelemetryDashboard.tsx",
+      "name": "TelemetryDashboard",
+      "type": "page",
+      "relPath": "pages/Ops/TelemetryDashboard.tsx",
+      "exports": [
+        "default"
+      ],
+      "externalDeps": [
+        "react",
+        "react-router-dom",
+        "react-query",
+        "lucide-react"
+      ],
+      "componentsUsed": [
+        "Tab",
+        "Link",
+        "ArrowLeft",
+        "RefreshCw"
+      ],
+      "hooksUsed": [
+        "useQueryClient",
+        "useQuery"
+      ],
+      "lines": 207,
+      "docstrings": []
+    },
+    {
+      "id": "pages/Ops/TrussDashboard.tsx",
+      "name": "TrussDashboard",
+      "type": "page",
+      "relPath": "pages/Ops/TrussDashboard.tsx",
+      "exports": [
+        "default"
+      ],
+      "externalDeps": [
+        "react",
+        "react-router-dom",
+        "react-query",
+        "lucide-react"
+      ],
+      "componentsUsed": [
+        "TrussRunStatus",
+        "Record",
+        "Link",
+        "ArrowLeft",
+        "RefreshCw",
+        "Play",
+        "ChevronUp",
+        "ChevronDown",
+        "XCircle"
+      ],
+      "hooksUsed": [
+        "useQueryClient",
+        "useState",
+        "useQuery",
+        "useMemo"
+      ],
+      "lines": 294,
+      "docstrings": []
+    },
+    {
+      "id": "pages/PRImpact/PRImpact.tsx",
+      "name": "PRImpact",
+      "type": "page",
+      "relPath": "pages/PRImpact/PRImpact.tsx",
+      "exports": [
+        "default"
+      ],
+      "externalDeps": [
+        "react",
+        "framer-motion",
+        "lucide-react"
+      ],
+      "componentsUsed": [
+        "GraphData",
+        "Set",
+        "GitBranch",
+        "AlertTriangle",
+        "TrendingUp",
+        "CheckCircle",
+        "Layers",
+        "ArrowRight"
+      ],
+      "hooksUsed": [
+        "useState",
+        "useEffect",
+        "useMemo"
+      ],
+      "lines": 273,
+      "docstrings": []
+    },
+    {
+      "id": "pages/Pulse/Pulse.tsx",
+      "name": "Pulse",
+      "type": "page",
+      "relPath": "pages/Pulse/Pulse.tsx",
+      "exports": [
+        "Pulse",
+        "default"
+      ],
+      "externalDeps": [
+        "framer-motion"
+      ],
+      "componentsUsed": [],
+      "hooksUsed": [],
+      "lines": 12,
+      "docstrings": []
+    },
+    {
+      "id": "pages/Sankey/Sankey.tsx",
+      "name": "Sankey",
+      "type": "page",
+      "relPath": "pages/Sankey/Sankey.tsx",
+      "exports": [
+        "Sankey",
+        "default"
+      ],
+      "externalDeps": [
+        "framer-motion"
+      ],
+      "componentsUsed": [],
+      "hooksUsed": [],
+      "lines": 12,
+      "docstrings": []
+    },
+    {
+      "id": "pages/TeamOps/TeamOps.tsx",
+      "name": "TeamOps",
+      "type": "page",
+      "relPath": "pages/TeamOps/TeamOps.tsx",
+      "exports": [
+        "TeamOps",
+        "default"
+      ],
+      "externalDeps": [
+        "framer-motion"
+      ],
+      "componentsUsed": [],
+      "hooksUsed": [],
+      "lines": 12,
+      "docstrings": []
+    },
+    {
+      "id": "services/apiClient.ts",
+      "name": "apiClient",
+      "type": "module",
+      "relPath": "services/apiClient.ts",
+      "exports": [],
+      "externalDeps": [],
+      "componentsUsed": [],
+      "hooksUsed": [],
+      "lines": 3,
+      "docstrings": [
+        "@deprecated Prefer importing from platformClient — kept for existing portal imports"
+      ]
+    },
+    {
+      "id": "services/authService.ts",
+      "name": "authService",
+      "type": "module",
+      "relPath": "services/authService.ts",
+      "exports": [
+        "AuthError",
+        "logout"
+      ],
+      "externalDeps": [
+        "axios"
+      ],
+      "componentsUsed": [],
+      "hooksUsed": [],
+      "lines": 52,
+      "docstrings": [
+        "Clears auth state and API client tokens.\rCallers on protected routes rely on AuthGuard to Navigate to /login\r(SPA navigation — no full page reload)."
+      ]
+    },
+    {
+      "id": "services/jobsService.ts",
+      "name": "jobsService",
+      "type": "module",
+      "relPath": "services/jobsService.ts",
+      "exports": [
+        "JobStatus",
+        "JobRecord",
+        "JobLogLine",
+        "JobFilters"
+      ],
+      "externalDeps": [],
+      "componentsUsed": [
+        "JobRecord",
+        "JobLogLine",
+        "Record"
+      ],
+      "hooksUsed": [],
+      "lines": 58,
+      "docstrings": []
+    },
+    {
+      "id": "services/platformClient.ts",
+      "name": "platformClient",
+      "type": "module",
+      "relPath": "services/platformClient.ts",
+      "exports": [
+        "API_GATEWAY_URL",
+        "REGISTRY_URL",
+        "REALTIME_GATEWAY_URL",
+        "apiClient",
+        "registryClient",
+        "clearAuthToken"
+      ],
+      "externalDeps": [
+        "axios"
+      ],
+      "componentsUsed": [],
+      "hooksUsed": [],
+      "lines": 65,
+      "docstrings": [
+        "Platform service URLs — backends live in deepiri-platform, not this repo.\r- api-gateway (:5100) — auth + proxied APIs\r- registry (:5003) — service catalog + health aggregation\r- realtime-gateway (:5008) — live event stream (socket.io)",
+        "Auth + general API traffic via api-gateway",
+        "Service catalog + health via deepiri-registry.\rPrefer gateway proxy when available; direct registry URL works in local platform compose."
+      ]
+    },
+    {
+      "id": "services/registryService.ts",
+      "name": "registryService",
+      "type": "module",
+      "relPath": "services/registryService.ts",
+      "exports": [
+        "Repo",
+        "Tool",
+        "EcosystemHealth"
+      ],
+      "externalDeps": [],
+      "componentsUsed": [
+        "Repo",
+        "Tool",
+        "EcosystemHealth"
+      ],
+      "hooksUsed": [],
+      "lines": 45,
+      "docstrings": []
+    },
+    {
+      "id": "services/telemetryService.ts",
+      "name": "telemetryService",
+      "type": "module",
+      "relPath": "services/telemetryService.ts",
+      "exports": [
+        "EcosystemHealth",
+        "JobMetrics",
+        "TelemetryEvent"
+      ],
+      "externalDeps": [],
+      "componentsUsed": [
+        "EcosystemHealth",
+        "JobMetrics",
+        "TelemetryEvent"
+      ],
+      "hooksUsed": [],
+      "lines": 41,
+      "docstrings": []
+    },
+    {
+      "id": "services/trussService.ts",
+      "name": "trussService",
+      "type": "module",
+      "relPath": "services/trussService.ts",
+      "exports": [
+        "TrussRunStatus",
+        "TrussDefinition",
+        "TrussDefinitionStep",
+        "TrussStepRun",
+        "TrussRun",
+        "TrussTemplateLaunchResponse"
+      ],
+      "externalDeps": [],
+      "componentsUsed": [
+        "TrussDefinition",
+        "TrussRun",
+        "TrussTemplateLaunchResponse"
+      ],
+      "hooksUsed": [],
+      "lines": 105,
+      "docstrings": []
+    },
+    {
+      "id": "store/authStore.ts",
+      "name": "authStore",
+      "type": "module",
+      "relPath": "store/authStore.ts",
+      "exports": [
+        "useAuthStore"
+      ],
+      "externalDeps": [
+        "zustand",
+        "zustand/middleware"
+      ],
+      "componentsUsed": [
+        "AuthState"
+      ],
+      "hooksUsed": [],
+      "lines": 35,
+      "docstrings": [
+        "auth-service login response doesn't currently return this"
+      ]
+    },
+    {
+      "id": "store/eventStore.ts",
+      "name": "eventStore",
+      "type": "module",
+      "relPath": "store/eventStore.ts",
+      "exports": [
+        "useEventStore"
+      ],
+      "externalDeps": [
+        "zustand",
+        "@deepiri/shared"
+      ],
+      "componentsUsed": [
+        "EventProducer",
+        "EventState"
+      ],
+      "hooksUsed": [],
+      "lines": 40,
+      "docstrings": []
+    },
+    {
+      "id": "store/healthStore.ts",
+      "name": "healthStore",
+      "type": "module",
+      "relPath": "store/healthStore.ts",
+      "exports": [
+        "useHealthStore"
+      ],
+      "externalDeps": [
+        "zustand",
+        "@deepiri/shared"
+      ],
+      "componentsUsed": [
+        "HealthState"
+      ],
+      "hooksUsed": [],
+      "lines": 21,
+      "docstrings": []
+    },
+    {
+      "id": "store/uiStore.ts",
+      "name": "uiStore",
+      "type": "module",
+      "relPath": "store/uiStore.ts",
+      "exports": [
+        "useUIStore"
+      ],
+      "externalDeps": [
+        "zustand",
+        "zustand/middleware"
+      ],
+      "componentsUsed": [
+        "UIState"
+      ],
+      "hooksUsed": [],
+      "lines": 44,
+      "docstrings": []
+    },
+    {
+      "id": "utils/api.ts",
+      "name": "api",
+      "type": "utility",
+      "relPath": "utils/api.ts",
+      "exports": [
+        "getActionErrorMessage"
+      ],
+      "externalDeps": [],
+      "componentsUsed": [],
+      "hooksUsed": [],
+      "lines": 12,
+      "docstrings": [
+        "Extract API error message from axios-style errors."
+      ]
+    },
+    {
+      "id": "utils/apiHelpers.ts",
+      "name": "apiHelpers",
+      "type": "utility",
+      "relPath": "utils/apiHelpers.ts",
+      "exports": [
+        "buildUrl",
+        "cleanQuery"
+      ],
+      "externalDeps": [],
+      "componentsUsed": [],
+      "hooksUsed": [],
+      "lines": 53,
+      "docstrings": [
+        "Safely builds API URLs with encoded path segments.\rEach segment is URI-encoded to prevent path traversal and special-character issues.\rQuery parameters with `undefined` or `null` values are automatically stripped.\r@example\rbuildUrl('/api/users', ['john doe', 'settings'])  → '/api/users/john%20doe/settings'\rbuildUrl('/api/search', [], { q: 'hello world', page: 1 })  → '/api/search?q=hello%20world&page=1'",
+        "Strips `undefined` and `null` values from a params object,\rreturning only defined key-value pairs.\r@example\rcleanQuery({ q: 'test', page: undefined, limit: null, sort: 'asc' })\r→ { q: 'test', sort: 'asc' }"
+      ]
+    },
+    {
+      "id": "utils/date.ts",
+      "name": "date",
+      "type": "utility",
+      "relPath": "utils/date.ts",
+      "exports": [
+        "formatTimestamp"
+      ],
+      "externalDeps": [],
+      "componentsUsed": [],
+      "hooksUsed": [],
+      "lines": 11,
+      "docstrings": [
+        "Short, locale-aware timestamp for Ops dashboards."
+      ]
+    },
+    {
+      "id": "utils/graphConstants.ts",
+      "name": "graphConstants",
+      "type": "utility",
+      "relPath": "utils/graphConstants.ts",
+      "exports": [
+        "TYPE_COLORS",
+        "FORCE_SIM"
+      ],
+      "externalDeps": [],
+      "componentsUsed": [],
+      "hooksUsed": [],
+      "lines": 27,
+      "docstrings": []
+    },
+    {
+      "id": "utils/ui.ts",
+      "name": "ui",
+      "type": "utility",
+      "relPath": "utils/ui.ts",
+      "exports": [
+        "statusBadgeClass"
+      ],
+      "externalDeps": [],
+      "componentsUsed": [],
+      "hooksUsed": [],
+      "lines": 14,
+      "docstrings": [
+        "Map health-ish status strings to a CSS class with a dashboard-specific prefix."
+      ]
+    },
+    {
+      "id": "vite-env.d.ts",
+      "name": "vite-env.d",
+      "type": "module",
+      "relPath": "vite-env.d.ts",
+      "exports": [],
+      "externalDeps": [],
+      "componentsUsed": [],
+      "hooksUsed": [],
+      "lines": 13,
+      "docstrings": [
+        "/ <reference types=\"vite/client\" />"
+      ]
+    }
+  ],
+  "links": [
+    {
+      "source": "app/App.test.tsx",
+      "target": "app/App.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "app/App.tsx",
+      "target": "app/Router.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "app/Router.tsx",
+      "target": "app/AuthGuard.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "app/Router.tsx",
+      "target": "app/Shell.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "immersive/scene/UniverseScene.tsx",
+      "target": "immersive/scene/Planet.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "main.tsx",
+      "target": "app/App.tsx",
+      "type": "imports"
+    },
+    {
+      "source": "pages/Ops/JobsDashboard.tsx",
+      "target": "services/jobsService.ts",
+      "type": "imports"
+    },
+    {
+      "source": "pages/Ops/JobsDashboard.tsx",
+      "target": "constants/query.ts",
+      "type": "imports"
+    },
+    {
+      "source": "pages/Ops/JobsDashboard.tsx",
+      "target": "utils/api.ts",
+      "type": "imports"
+    },
+    {
+      "source": "pages/Ops/RegistryDashboard.tsx",
+      "target": "services/registryService.ts",
+      "type": "imports"
+    },
+    {
+      "source": "pages/Ops/RegistryDashboard.tsx",
+      "target": "constants/query.ts",
+      "type": "imports"
+    },
+    {
+      "source": "pages/Ops/RegistryDashboard.tsx",
+      "target": "utils/ui.ts",
+      "type": "imports"
+    },
+    {
+      "source": "pages/Ops/TelemetryDashboard.tsx",
+      "target": "services/telemetryService.ts",
+      "type": "imports"
+    },
+    {
+      "source": "pages/Ops/TelemetryDashboard.tsx",
+      "target": "constants/query.ts",
+      "type": "imports"
+    },
+    {
+      "source": "pages/Ops/TelemetryDashboard.tsx",
+      "target": "utils/ui.ts",
+      "type": "imports"
+    },
+    {
+      "source": "pages/Ops/TrussDashboard.tsx",
+      "target": "services/trussService.ts",
+      "type": "imports"
+    },
+    {
+      "source": "pages/Ops/TrussDashboard.tsx",
+      "target": "constants/query.ts",
+      "type": "imports"
+    },
+    {
+      "source": "pages/Ops/TrussDashboard.tsx",
+      "target": "utils/api.ts",
+      "type": "imports"
+    },
+    {
+      "source": "pages/Ops/TrussDashboard.tsx",
+      "target": "utils/date.ts",
+      "type": "imports"
+    },
+    {
+      "source": "services/apiClient.ts",
+      "target": "services/platformClient.ts",
+      "type": "imports"
+    },
+    {
+      "source": "services/authService.ts",
+      "target": "services/platformClient.ts",
+      "type": "imports"
+    },
+    {
+      "source": "services/jobsService.ts",
+      "target": "services/platformClient.ts",
+      "type": "imports"
+    },
+    {
+      "source": "services/registryService.ts",
+      "target": "services/platformClient.ts",
+      "type": "imports"
+    },
+    {
+      "source": "services/telemetryService.ts",
+      "target": "services/platformClient.ts",
+      "type": "imports"
+    },
+    {
+      "source": "services/trussService.ts",
+      "target": "services/platformClient.ts",
+      "type": "imports"
+    }
+  ],
+  "meta": {
+    "analyzedAt": "2026-08-08T18:55:41.272Z",
+    "fileCount": 58
+  }
+}
