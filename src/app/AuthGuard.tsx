@@ -11,8 +11,15 @@ function useAuthHydrated() {
 }
 
 export function AuthGuard({ children }: { children: React.ReactNode }) {
-  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
-  const hydrated = useAuthHydrated();
+  // DEV PREVIEW ONLY: "?preview=1" (or hash "#preview") skips the login wall so
+  // unauthenticated reviewers can navigate the whole app. NOT for production.
+  const preview =
+    import.meta.env.DEV &&
+    (new URLSearchParams(window.location.search).has("preview") ||
+      window.location.hash.includes("preview"));
+
+  const isAuthenticated = preview || useAuthStore((s) => s.isAuthenticated);
+  const hydrated = preview || useAuthHydrated();
 
   if (!hydrated) {
     return (
