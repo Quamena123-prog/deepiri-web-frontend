@@ -20,6 +20,8 @@ const AIWorkspace = lazy(() => import("@/pages/AIWorkspace/AIWorkspace"));
 const TeamOps = lazy(() => import("@/pages/TeamOps/TeamOps"));
 const Onboarding = lazy(() => import("@/pages/Onboarding/Onboarding"));
 const ImmersivePage = lazy(() => import("@/pages/Immersive/ImmersivePage"));
+const CodebaseGraph = lazy(() => import("@/pages/CodebaseGraph/CodebaseGraph"));
+const PRImpact = lazy(() => import("@/pages/PRImpact/PRImpact"));
 
 const PageLoader = () => (
   <div
@@ -72,6 +74,8 @@ export function AppRouter() {
           <Route path="ai" element={<AIWorkspace />} />
           <Route path="team" element={<TeamOps />} />
           <Route path="onboarding" element={<Onboarding />} />
+          <Route path="codebase" element={<CodebaseGraph />} />
+          <Route path="pr-impact" element={<PRImpact />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

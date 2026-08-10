@@ -17,6 +17,10 @@ const NAV = [
   { section: "AI", items: [
     { to: "/ai",          icon: "◐", label: "AI Workspace" },
   ]},
+  { section: "Intelligence", items: [
+    { to: "/codebase",    icon: "◈", label: "Codebase Graph" },
+    { to: "/pr-impact",   icon: "⬡", label: "PR Impact" },
+  ]},
   { section: "Team", items: [
     { to: "/team",        icon: "◳", label: "Team Ops" },
     { to: "/onboarding",  icon: "★", label: "Start Here" },
