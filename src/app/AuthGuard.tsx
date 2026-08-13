@@ -18,8 +18,10 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
     (new URLSearchParams(window.location.search).has("preview") ||
       window.location.hash.includes("preview"));
 
-  const isAuthenticated = preview || useAuthStore((s) => s.isAuthenticated);
-  const hydrated = preview || useAuthHydrated();
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const hydrated = useAuthHydrated();
+
+  if (preview) return <>{children}</>;
 
   if (!hydrated) {
     return (
