@@ -38,6 +38,7 @@ export default function Home() {
             <div className="eyebrow" style={{ marginBottom: 10 }}>{stat.label}</div>
             <div style={{ fontFamily: "var(--font-head)", fontSize: 38, fontWeight: 700, color: stat.color, textShadow: `0 0 24px ${stat.color}40`, lineHeight: 1.1 }}>{stat.value}</div>
           </div>
+          </div>
         ))}
       </motion.div>
 
@@ -51,6 +52,7 @@ export default function Home() {
           <div>
             <div style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 17, marginBottom: 4 }}>3D Universe Ready</div>
             <div style={{ fontSize: 12.5, color: "var(--dim)" }}>The immersive scene is live. See every service as a node in 3D space.</div>
+          </div>
           </div>
           <button
             onClick={() => navigate("/immersive")}

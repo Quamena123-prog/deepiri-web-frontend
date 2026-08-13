@@ -54,7 +54,11 @@ export function Sidebar() {
     >
       {/* Logo */}
       <div style={{ padding: "18px 16px", borderBottom: "1px solid var(--border-soft)", display: "flex", alignItems: "center", gap: 10 }}>
-        <div style={{ width: 34, height: 34, borderRadius: 10, background: "var(--gradient)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 15, color: "#fff", flexShrink: 0, boxShadow: "0 4px 16px rgba(99,102,241,0.4)" }}>D</div>
+        <img
+          src="/favicon.ico"
+          alt="Deepiri logo"
+          style={{ width: 34, height: 34, borderRadius: 10, objectFit: "contain", background: "transparent", display: "block", flexShrink: 0, boxShadow: "0 4px 16px rgba(99,102,241,0.25)" }}
+        />
         {!sidebarCollapsed && (
           <span style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 16, letterSpacing: "-0.01em", color: "var(--text)" }}>
             deep<span style={{ background: "var(--gradient)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>iri</span>

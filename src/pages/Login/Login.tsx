@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { AuthError, login } from "@/services/authService";
-import { Boxes, Lock, Mail } from "lucide-react";
+import { Lock, Mail } from "lucide-react";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -54,9 +54,11 @@ export default function Login() {
       >
         {/* Logo */}
         <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 36 }}>
-          <div style={{ width: 42, height: 42, borderRadius: 12, background: "var(--gradient)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", boxShadow: "0 6px 20px rgba(99,102,241,0.45)" }}>
-            <Boxes size={20} />
-          </div>
+          <img
+            src="/favicon.ico"
+            alt="Deepiri logo"
+            style={{ width: 42, height: 42, borderRadius: 12, objectFit: "contain", background: "transparent", display: "block", boxShadow: "0 6px 20px rgba(99,102,241,0.25)" }}
+          />
           <span style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 19 }}>
             deep<span style={{ background: "var(--gradient)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>iri</span>
           </span>
@@ -64,6 +66,7 @@ export default function Login() {
 
         <div style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 24, marginBottom: 6, letterSpacing: "-0.01em" }}>Welcome back</div>
         <div style={{ fontSize: 13, color: "var(--dim)", marginBottom: 30 }}>Sign in to the Deepiri Hub</div>
+>>>>>>> origin/main
 
         <form onSubmit={handleLogin}>
           <div style={{ marginBottom: 18 }}>
