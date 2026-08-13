@@ -66,7 +66,6 @@ export default function Login() {
 
         <div style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 24, marginBottom: 6, letterSpacing: "-0.01em" }}>Welcome back</div>
         <div style={{ fontSize: 13, color: "var(--dim)", marginBottom: 30 }}>Sign in to the Deepiri Hub</div>
->>>>>>> origin/main
 
         <form onSubmit={handleLogin}>
           <div style={{ marginBottom: 18 }}>
