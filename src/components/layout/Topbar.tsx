@@ -83,7 +83,7 @@ export function Topbar() {
     <header style={{
       height: "var(--topbar-h)", minHeight: "var(--topbar-h)",
       borderBottom: "1px solid var(--border)",
-      background: "rgba(10,14,24,0.82)",
+      background: "rgba(255,255,255,0.82)",
       backdropFilter: "blur(14px)",
       display: "flex", alignItems: "center",
       padding: "0 24px", gap: 16,

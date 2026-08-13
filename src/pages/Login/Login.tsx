@@ -32,9 +32,9 @@ export default function Login() {
   return (
     <div style={{ minHeight: "100vh", background: "var(--bg)", display: "flex", alignItems: "center", justifyContent: "center", padding: "1.5rem", position: "relative", overflow: "hidden" }}>
       {/* Ambient orbs */}
-      <div style={{ position: "fixed", top: "-6rem", left: "22%", width: "28rem", height: "28rem", background: "#6366f1", borderRadius: "50%", filter: "blur(110px)", opacity: 0.14, pointerEvents: "none" }} />
-      <div style={{ position: "fixed", bottom: "-6rem", right: "18%", width: "28rem", height: "28rem", background: "#a855f7", borderRadius: "50%", filter: "blur(110px)", opacity: 0.12, pointerEvents: "none" }} />
-      <div style={{ position: "fixed", top: "30%", left: "8%", width: "12rem", height: "12rem", background: "#22d3ee", borderRadius: "50%", filter: "blur(90px)", opacity: 0.05, pointerEvents: "none" }} />
+      <div style={{ position: "fixed", top: "-6rem", left: "22%", width: "28rem", height: "28rem", background: "#6366f1", borderRadius: "50%", filter: "blur(110px)", opacity: 0.08, pointerEvents: "none" }} />
+      <div style={{ position: "fixed", bottom: "-6rem", right: "18%", width: "28rem", height: "28rem", background: "#fbbf24", borderRadius: "50%", filter: "blur(110px)", opacity: 0.07, pointerEvents: "none" }} />
+      <div style={{ position: "fixed", top: "30%", left: "8%", width: "12rem", height: "12rem", background: "#8b5cf6", borderRadius: "50%", filter: "blur(90px)", opacity: 0.04, pointerEvents: "none" }} />
 
       <motion.div
         initial={{ opacity: 0, y: 24, scale: 0.98 }}
@@ -42,7 +42,7 @@ export default function Login() {
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
         style={{
           width: 400,
-          background: "rgba(12,17,27,0.85)",
+          background: "rgba(255,255,255,0.9)",
           backdropFilter: "blur(18px)",
           border: "1px solid var(--border)",
           borderRadius: "var(--r-xl)",
@@ -71,7 +71,7 @@ export default function Login() {
           <div style={{ marginBottom: 18 }}>
             <label className="eyebrow" style={{ display: "block", marginBottom: 7, fontWeight: 600 }}>Email</label>
             <div style={{ position: "relative" }}>
-              <Mail size={15} style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: "#55607A", pointerEvents: "none" }} />
+              <Mail size={15} style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: "#9ca3af", pointerEvents: "none" }} />
               <input
                 type="email" value={email} onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@deepiri.io" required
@@ -83,7 +83,7 @@ export default function Login() {
           <div style={{ marginBottom: 26 }}>
             <label className="eyebrow" style={{ display: "block", marginBottom: 7, fontWeight: 600 }}>Password</label>
             <div style={{ position: "relative" }}>
-              <Lock size={15} style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: "#55607A", pointerEvents: "none" }} />
+              <Lock size={15} style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: "#9ca3af", pointerEvents: "none" }} />
               <input
                 type="password" value={password} onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••" required

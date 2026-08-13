@@ -43,7 +43,7 @@ export function Sidebar() {
       transition={{ duration: 0.22, ease: [0.4, 0, 0.2, 1] }}
       style={{
         width: w, minWidth: w,
-        background: "rgba(10,14,24,0.82)",
+        background: "rgba(255,255,255,0.82)",
         backdropFilter: "blur(14px)",
         borderRight: "1px solid var(--border)",
         display: "flex", flexDirection: "column",
@@ -57,7 +57,7 @@ export function Sidebar() {
         <img
           src="/favicon.ico"
           alt="Deepiri logo"
-          style={{ width: 34, height: 34, borderRadius: 10, objectFit: "contain", background: "transparent", display: "block", flexShrink: 0, boxShadow: "0 4px 16px rgba(99,102,241,0.25)" }}
+          style={{ width: 34, height: 34, borderRadius: 10, objectFit: "contain", background: "transparent", display: "block", flexShrink: 0, boxShadow: "0 4px 16px rgba(99,102,241,0.18)" }}
         />
         {!sidebarCollapsed && (
           <span style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 16, letterSpacing: "-0.01em", color: "var(--text)" }}>
@@ -71,7 +71,7 @@ export function Sidebar() {
         {NAV.map((section) => (
           <div key={section.section} style={{ marginBottom: 18 }}>
             {!sidebarCollapsed && (
-              <div style={{ fontSize: 9.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "#55607A", padding: "0 10px", marginBottom: 6, fontWeight: 600 }}>
+              <div style={{ fontSize: 9.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "#9ca3af", padding: "0 10px", marginBottom: 6, fontWeight: 600 }}>
                 {section.section}
               </div>
             )}
@@ -86,9 +86,9 @@ export function Sidebar() {
                     position: "relative",
                     display: "flex", alignItems: "center", gap: 10,
                     padding: "9px 10px", borderRadius: "var(--r-md)",
-                    fontSize: 13, color: isActive ? "#fff" : "#7C87A1",
+                    fontSize: 13, color: isActive ? "#fff" : "#6b7280",
                     background: isActive ? "var(--gradient)" : "transparent",
-                    boxShadow: isActive ? "0 4px 14px rgba(99,102,241,0.35)" : "none",
+                    boxShadow: isActive ? "0 4px 14px rgba(99,102,241,0.25)" : "none",
                     marginBottom: 2, transition: "all 0.16s ease",
                     textDecoration: "none",
                     justifyContent: sidebarCollapsed ? "center" : "flex-start",
@@ -111,9 +111,9 @@ export function Sidebar() {
       {/* Collapse toggle */}
       <button
         onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-        style={{ padding: "12px 16px", borderTop: "1px solid var(--border-soft)", background: "none", border: "none", color: "#7C87A1", fontSize: 12, textAlign: "left", display: "flex", alignItems: "center", gap: 10, justifyContent: sidebarCollapsed ? "center" : "flex-start", transition: "color 0.15s" }}
-        onMouseEnter={(e) => (e.currentTarget.style.color = "#fff")}
-        onMouseLeave={(e) => (e.currentTarget.style.color = "#7C87A1")}
+        style={{ padding: "12px 16px", borderTop: "1px solid var(--border-soft)", background: "none", border: "none", color: "#6b7280", fontSize: 12, textAlign: "left", display: "flex", alignItems: "center", gap: 10, justifyContent: sidebarCollapsed ? "center" : "flex-start", transition: "color 0.15s" }}
+        onMouseEnter={(e) => (e.currentTarget.style.color = "#1f2937")}
+        onMouseLeave={(e) => (e.currentTarget.style.color = "#6b7280")}
       >
         {sidebarCollapsed ? <PanelLeftOpen size={16} /> : <PanelLeftClose size={16} />}
         {!sidebarCollapsed && "Collapse"}
